@@ -47,21 +47,21 @@ function UserSignup() {
   });
 
   // mutation for updateUser PUT request
-  const updateUserMutation = useMutation({
-    mutationFn: async ({ id: userId, values }) => {
-      await fetch(`${REACT_APP_BASE_URL}/user-update/${userId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId, values }),
-      });
-    },
+  // const updateUserMutation = useMutation({
+  //   mutationFn: async ({ id: userId, values }) => {
+  //     await fetch(`${REACT_APP_BASE_URL}/user-update/${userId}`, {
+  //       method: "PUT",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ userId, values }),
+  //     });
+  //   },
 
-    onSuccess: () => {
-      setUserId(null);
-      formik.resetForm();
-      queryClient.invalidateQueries("[users]");
-    },
-  });
+  //   onSuccess: () => {
+  //     setUserId(null);
+  //     formik.resetForm();
+  //     queryClient.invalidateQueries("[users]");
+  //   },
+  // });
 
   const formik = useFormik({
     initialValues: {

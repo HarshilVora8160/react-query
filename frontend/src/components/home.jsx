@@ -23,13 +23,13 @@ const Home = ({ formik, setUserId }) => {
             <th>First Name</th>
             <th>Last Name</th>
             <th>Username</th>
-            <th>Action</th>
+            {/* <th>Action</th> */}
           </tr>
         </thead>
         <tbody>
           {!data.length ? (
             <tr>
-              <td colSpan={5} className="text-center"> 
+              <td colSpan={5} className="text-center">
                 No Users Found
               </td>
             </tr>
@@ -41,7 +41,7 @@ const Home = ({ formik, setUserId }) => {
                   <td>{user.username}</td>
                   <td>{user.email}</td>
                   <td>{user.password}</td>
-                  <td className="d-flex gap-2">
+                  {/* <td className="d-flex gap-2">
                     <Button
                       className="bg-transparent border border-primary text-primary fw-semibold"
                       onClick={() => {
@@ -51,10 +51,10 @@ const Home = ({ formik, setUserId }) => {
                     >
                       Edit
                     </Button>
-                    {/* <Button className="bg-transparent border border-danger text-danger fw-semibold" onClick={() => setUserId(user._id)}>
+                    <Button className="bg-transparent border border-danger text-danger fw-semibold" onClick={() => setUserId(user._id)}>
                       Delete
-                    </Button> */}
-                  </td>
+                    </Button>
+                  </td> */}
                 </tr>
               );
             })

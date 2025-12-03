@@ -1,0 +1,24 @@
+IluWcLUD1KyrfsF3
+
+newEmail and password :-
+email : omyharshil338@gmail.com
+password : OMYHarshil338@#
+
+auto suggestion extension :- GitHub Copilot Chat
+
+learning about this :- 
+1.react query,
+2.crud,
+3.formik and yup library,
+4.axios,
+5.rtk query, ( not suggestion from sir, its my oppinion);
+6.pagination
+7.multer
+8.typeScript
+
+1.REACT QUERY
+=> queryKey:['users'] query key no use data catch karva mate thay che
+=> queryFn: function je data fetch karse
+=> useQuery : destructure data from react query is {data, isPending, isError, error}
+=> all destructure data was return by useQuery
+=> after export default function name

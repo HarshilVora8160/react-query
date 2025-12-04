@@ -1,10 +1,13 @@
 import Table from "react-bootstrap/Table";
 import useQueryForUsers from "../hooks/useQueryForUsers";
 import Button from "react-bootstrap/esm/Button";
-import { REACT_APP_BASE_URL } from "../config";
+import { useLocation } from "react-router-dom";
+import Navbar from "./Navbar";
 
-const Home = ({ formik, setUserId }) => {
+const Home = ({ formik, setUserId, deleteUserMutation }) => {
   const { data, isPending, isError, error } = useQueryForUsers();
+
+  const { pathname } = useLocation();
 
   if (isPending) {
     return <div>Loading...</div>;
@@ -16,6 +19,7 @@ const Home = ({ formik, setUserId }) => {
 
   return (
     <div>
+      <Navbar />
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -23,7 +27,7 @@ const Home = ({ formik, setUserId }) => {
             <th>First Name</th>
             <th>Last Name</th>
             <th>Username</th>
-            {/* <th>Action</th> */}
+            {pathname === "/" ? <th>Actions</th> : null}
           </tr>
         </thead>
         <tbody>
@@ -41,20 +45,24 @@ const Home = ({ formik, setUserId }) => {
                   <td>{user.username}</td>
                   <td>{user.email}</td>
                   <td>{user.password}</td>
-                  {/* <td className="d-flex gap-2">
-                    <Button
-                      className="bg-transparent border border-primary text-primary fw-semibold"
-                      onClick={() => {
-                        setUserId(user._id);
-                        formik.setValues({username: user.username, email: user.email});
-                      }}
-                    >
-                      Edit
-                    </Button>
-                    <Button className="bg-transparent border border-danger text-danger fw-semibold" onClick={() => setUserId(user._id)}>
-                      Delete
-                    </Button>
-                  </td> */}
+                  {pathname === "/" ? (
+                    <>
+                      <td className="d-flex gap-2">
+                        <Button
+                          className="bg-transparent border border-primary text-primary fw-semibold"
+                          onClick={() => {
+                            setUserId({ editId: user._id, deleteId: null });
+                            formik.setValues({ username: user.username, email: user.email });
+                          }}
+                        >
+                          Edit
+                        </Button>
+                        <Button className="bg-transparent border border-danger text-danger fw-semibold" onClick={() => deleteUserMutation.mutate(user._id)}>
+                          Delete
+                        </Button>
+                      </td>
+                    </>
+                  ) : null}
                 </tr>
               );
             })

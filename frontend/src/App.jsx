@@ -10,6 +10,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* <ToastContainer /> */}
         <Route path="/" element={<BasicSignupPage />} />
         {/* <Route path="/" element={<Home />} /> */}
         <Route path="/signup" element={<UserSignup />} />

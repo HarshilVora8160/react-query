@@ -13,15 +13,13 @@ function UserSignup() {
   const queryClient = useQueryClient();
 
   // fetch data
-  const { data } = useQuery({
+  useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const res = await fetch(`${REACT_APP_BASE_URL}/users`);
       return res.userData.json();
     },
   });
-
-  // console.log("data----------------", data);
 
   // mutation for newUser post request
   const signupUserMutation = useMutation({
@@ -35,33 +33,11 @@ function UserSignup() {
     },
 
     onSuccess: (newUser) => {
-      if (!newUser.userData) {
-        if (newUser.errorMessage) {
-          return toast.error(newUser.errorMessage);
-        } else if (newUser.successMessage) {
-          return toast.success(newUser.successMessage);
-        }
-      }
-      return queryClient.setQueryData(["users"], (oldUsers) => [...oldUsers, newUser.userData]);
+      newUser.errorMessage && toast.error(newUser.errorMessage);
+      newUser.successMessage && toast.success(newUser.successMessage);
+      return newUser.userData && queryClient.setQueryData(["users"], (oldUsers) => [...oldUsers, newUser.userData]);
     },
   });
-
-  // mutation for updateUser PUT request
-  // const updateUserMutation = useMutation({
-  //   mutationFn: async ({ id: userId, values }) => {
-  //     await fetch(`${REACT_APP_BASE_URL}/user-update/${userId}`, {
-  //       method: "PUT",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({ userId, values }),
-  //     });
-  //   },
-
-  //   onSuccess: () => {
-  //     setUserId(null);
-  //     formik.resetForm();
-  //     queryClient.invalidateQueries("[users]");
-  //   },
-  // });
 
   const formik = useFormik({
     initialValues: {
@@ -79,6 +55,7 @@ function UserSignup() {
     onSubmit: (values) => {
       signupUserMutation.mutate(values);
       formik.resetForm();
+      formik.errors = {};
     },
   });
 

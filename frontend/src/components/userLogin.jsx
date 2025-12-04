@@ -30,14 +30,13 @@ const UserLogin = () => {
         //   headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         // })
         .then((res) => {
-          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("token", res.data.token, { data: res.data.userData });
+          localStorage.setItem("user", JSON.stringify(res.data.userData));
+          toast.success(res.data.successMessage);
           if (res.data.userData) {
-            toast.success(res.data.successMessage);
             if (localStorage.getItem("token")) {
               resetForm();
-              setTimeout(() => {
-                navigate("/");
-              }, 500);
+              navigate("/");
             }
           } else {
             toast.error(res.data.errorMessage);

@@ -55,21 +55,23 @@ const userLogin = async (req, res, next) => {
 };
 
 const userFindAndUpdate = async (req, res, next) => {
-  console.log("req.body---------------", req.body);
   try {
-    const { id } = req.params;
-    console.log("id----------------", id);
-    const { username, email, password } = req.body.values;
-    console.log("username, email, password---------------", username, email, password);
+    const { id: _id } = req.params;
+    const { email, username } = req.body;
 
-    if (!id) {
+    if (!_id) {
       return res.status(400).json({ errorMessage: "user was not found!" });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const findUser = await UserSignup?.findByIdAndUpdate(id, { username, email, password: hashedPassword }, { new: true });
-    return res.status(200).json({ successMessage: "user update successfully!", data: findUser });
+    const findUserByEmail = await UserSignup?.findOne({ email });
+    
+    if (findUserByEmail) {
+      return res.status(201).json({ errorMessage: "user already exists!" });
+    }
+    
+    const findUser = await UserSignup?.findByIdAndUpdate(_id, { email, username }, { new: true });
+    
+    return res.status(200).json({ successMessage: "user updated successfully!", data: findUser });
   } catch (error) {
     console.log(error);
   }
@@ -82,12 +84,10 @@ const userFindAndDelete = async (req, res, next) => {
       return res.status(400).json({ errorMessage: "user not found!" });
     }
 
-    const findUser = await UserSignup?.findOne({ id });
-    if (!findUser) {
-      return res.status(201).json({ errorMessage: "user not found!" });
-    }
-
     const deletedUser = await UserSignup?.findByIdAndDelete(id);
+    if(!deletedUser){
+      return res.status(400).json({errorMessage:"user not found by id!"})
+    }
 
     return res.status(200).json({ successMessage: "user deleted successfully!", data: deletedUser });
   } catch (error) {

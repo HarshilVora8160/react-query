@@ -7,6 +7,9 @@ import Navbar from "./Navbar";
 const Home = ({ formik, setUserId, deleteUserMutation }) => {
   const { data, isPending, isError, error } = useQueryForUsers();
 
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log("user------------", user);
+
   const { pathname } = useLocation();
 
   if (isPending) {

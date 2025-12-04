@@ -11,10 +11,12 @@ learning about this :-
 2.crud,
 3.formik and yup library,
 4.axios,
-5.rtk query, ( not suggestion from sir, its my oppinion);
-6.pagination
-7.multer
-8.typeScript
+5.rtk query, ( not suggestion from sir, its my opinion);
+6.pagination,
+7.multer,
+8.typeScript,
+9.mySql,
+10.next js
 
 1.REACT QUERY
 => queryKey:['users'] query key no use data catch karva mate thay che

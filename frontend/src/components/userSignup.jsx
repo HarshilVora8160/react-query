@@ -33,8 +33,8 @@ function UserSignup() {
     },
 
     onSuccess: (newUser) => {
-      newUser.errorMessage && toast.error(newUser.errorMessage);
       newUser.successMessage && toast.success(newUser.successMessage);
+      newUser.errorMessage && toast.error(newUser.errorMessage);
       return newUser.userData && queryClient.setQueryData(["users"], (oldUsers) => [...oldUsers, newUser.userData]);
     },
   });

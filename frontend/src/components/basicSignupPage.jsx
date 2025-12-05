@@ -43,7 +43,7 @@ function BasicSignupPage() {
       queryClient.setQueryData(["users"], (oldData) => oldData.map((user) => (user._id === response.data._id ? response.data : user)));
       setTimeout(() => {
         setUserId(null);
-      },3000);
+      }, 3000);
       formik.resetForm();
     },
   });
@@ -61,16 +61,16 @@ function BasicSignupPage() {
     },
 
     onSuccess: (response) => {
-      if (response?.errorMessage) {
-        toast.error(response.errorMessage);
-      } else if(response?.data) {
-          toast.success(response.successMessage);
-          queryClient.setQueryData(["users"], (oldData) => oldData.filter((user) => user._id !== response.data._id));
-      }
+      // if (response?.errorMessage) {
+      //   toast.error(response.errorMessage);
+      // } else if(response?.data) {
+      //     toast.success(response.successMessage);
+      //     queryClient.setQueryData(["users"], (oldData) => oldData.filter((user) => user._id !== response.data._id));
+      // }
 
-      // toast.success(response.successMessage);
-      // toast.error(response.errorMessage);
-      // return response.data && queryClient.setQueryData(["users"], (oldData) => oldData.filter((user) => user._id !== response.data._id));
+      response.successMessage && toast.success(response.successMessage);
+      response.errorMessage && toast.error(response.errorMessage);
+      return response.data && queryClient.setQueryData(["users"], (oldData) => oldData.filter((user) => user._id !== response.data._id));
     },
   });
 
